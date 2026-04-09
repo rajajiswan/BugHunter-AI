@@ -24,10 +24,11 @@ from enum import Enum
 # ========== 1. إعداد متغيرات API ==========
 # NOTE: Replace these placeholder API keys with your actual OpenRouter API keys
 # Get your keys from: https://openrouter.ai/keys
+# PERSONAL NOTE: Remember to set these in environment variables for better security
 API_KEYS = [
-    "API_KEY_1",
-    "API_KEY_2",
-    "API_KEY_3"
+    os.getenv("OPENROUTER_KEY_1", "API_KEY_1"),
+    os.getenv("OPENROUTER_KEY_2", "API_KEY_2"),
+    os.getenv("OPENROUTER_KEY_3", "API_KEY_3")
 ]
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 MODEL = "deepseek-coder"
@@ -74,7 +75,4 @@ TOOL_RESOURCES = {
     "gobuster": {"cpu": 25, "ram": 90, "duration": 100, "priority": 2},
     "wfuzz": {"cpu": 25, "ram": 85, "duration": 110, "priority": 2},
     "hydra": {"cpu": 50, "ram": 120, "duration": 600, "priority": 1},
-    "metasploit": {"cpu": 40, "ram": 300, "duration": 180, "priority": 1},
-    # Add default for unknown tools
-    "default": {"cpu": 20, "ram": 80, "duration": 60, "priority": 3}
-}
+    "metasploit": {"c
