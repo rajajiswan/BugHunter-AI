@@ -25,6 +25,7 @@ from enum import Enum
 # NOTE: Replace these placeholder API keys with your actual OpenRouter API keys
 # Get your keys from: https://openrouter.ai/keys
 # PERSONAL NOTE: Remember to set these in environment variables for better security
+# SECURITY TIP: Never commit actual API keys to version control!
 API_KEYS = [
     os.getenv("OPENROUTER_KEY_1", "API_KEY_1"),
     os.getenv("OPENROUTER_KEY_2", "API_KEY_2"),
@@ -54,8 +55,9 @@ EXPLOIT = [
 ALL_TOOLS = RECON + ENUM + DIR_ENUM + VULN + EXPLOIT
 
 # Tool resource profiles (CPU%, RAM MB, estimated duration seconds)
+# PERSONAL NOTE: Adjusted nmap duration to 180s based on my typical scan times
 TOOL_RESOURCES = {
-    "nmap": {"cpu": 30, "ram": 100, "duration": 120, "priority": 1},
+    "nmap": {"cpu": 30, "ram": 100, "duration": 180, "priority": 1},
     "masscan": {"cpu": 80, "ram": 150, "duration": 300, "priority": 1},
     "amass": {"cpu": 40, "ram": 200, "duration": 180, "priority": 2},
     "sublist3r": {"cpu": 20, "ram": 80, "duration": 60, "priority": 2},
@@ -72,7 +74,4 @@ TOOL_RESOURCES = {
     "dirb": {"cpu": 20, "ram": 70, "duration": 180, "priority": 2},
     "dirsearch": {"cpu": 25, "ram": 80, "duration": 150, "priority": 2},
     "ffuf": {"cpu": 30, "ram": 100, "duration": 120, "priority": 2},
-    "gobuster": {"cpu": 25, "ram": 90, "duration": 100, "priority": 2},
-    "wfuzz": {"cpu": 25, "ram": 85, "duration": 110, "priority": 2},
-    "hydra": {"cpu": 50, "ram": 120, "duration": 600, "priority": 1},
-    "metasploit": {"c
+    "gobuster": {"cpu": 25, "ram": 90, "duration": 100,
