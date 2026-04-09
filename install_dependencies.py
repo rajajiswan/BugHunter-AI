@@ -58,9 +58,11 @@ def main():
         sys.exit(1)
     
     # List of required packages
+    # Added colorama for colored terminal output on Windows too
     required_packages = {
         'psutil': 'psutil',
-        'requests': 'requests'
+        'requests': 'requests',
+        'colorama': 'colorama'
     }
     
     print("\n" + "="*60)
