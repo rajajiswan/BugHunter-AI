@@ -59,10 +59,12 @@ def main():
     
     # List of required packages
     # Added colorama for colored terminal output on Windows too
+    # Added rich for prettier output - much nicer than plain print statements
     required_packages = {
         'psutil': 'psutil',
         'requests': 'requests',
-        'colorama': 'colorama'
+        'colorama': 'colorama',
+        'rich': 'rich'
     }
     
     print("\n" + "="*60)
@@ -86,6 +88,7 @@ def main():
         print("[!] On Ubuntu/Debian: sudo apt-get install python3-tk")
         print("[!] On Fedora: sudo dnf install python3-tkinter")
         print("[!] On macOS: tkinter should be included with Python")
+        # Note: tkinter missing isn't fatal if running headless/CLI mode
         all_success = False
     
     print("\n" + "="*60)
@@ -95,10 +98,7 @@ def main():
         print("\n🚀 You can now run: python3 AIlinuxV2.py")
     else:
         print("⚠️  SOME DEPENDENCIES FAILED TO INSTALL")
-        print("Please install them manually and try again")
-        sys.exit(1)
-    
-    print("="*60 + "\n")
+        print("Please install missing dependencies manually and try again.")
 
 if __name__ == "__main__":
     main()
