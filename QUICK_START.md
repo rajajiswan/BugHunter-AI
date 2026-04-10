@@ -154,6 +154,9 @@ Result: Good balance of speed and stability
 - Close terminal windows that open
 - Interrupt scans unnecessarily
 
-> **Personal note:** On my machine (8GB RAM, older i5) I found that setting
-> Max Concurrent to **1** and RAM Threshold to **70%** gives the most stable
-> results — the default 2 concurrent tools occasionally caused lag spikes.
+## Personal Notes
+
+> **Note (for my own reference):** On my home lab machine (8GB RAM, older i5) I've found
+> that setting Max Concurrent to **1** and RAM Threshold to **65%** is much more stable
+> than the recommended defaults — the system was getting sluggish with 2 concurrent tools.
+> YMMV depending on your hardware.
