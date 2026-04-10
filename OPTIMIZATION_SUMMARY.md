@@ -87,7 +87,6 @@ def can_run_tool(tool_name):
 
 ## Personal Notes
 
-> **Note (my fork):** On my laptop (8GB RAM, older i5) the default thresholds of 70% CPU / 75% RAM
-> still cause noticeable slowdowns. I find setting CPU threshold to **60%** and RAM threshold to
-> **65%** works much better for day-to-day use. Keeping this here so I remember to change the
-> defaults in `resource_monitor.py` if I reset the repo.
+> **Note (my fork):** On my dev machine (8-core, 16GB RAM) the default thresholds of 70% CPU / 75% RAM
+> feel a bit conservative. I've bumped them to **80% CPU / 85% RAM** in `resource_monitor.py` so the
+> queue moves faster during local testing. Revert before running on a shared/production box.
