@@ -45,10 +45,12 @@ class Scanner:
     """Main scanner class that orchestrates vulnerability discovery."""
 
     # Common ports to check during quick scans
+    # Added 8888 (Jupyter), 9200 (Elasticsearch), 5000 (Flask dev) - useful for CTF/lab targets
     COMMON_PORTS = [21, 22, 23, 25, 53, 80, 110, 143, 443, 445,
-                    3306, 3389, 5432, 6379, 8080, 8443, 27017]
+                    3306, 3389, 5432, 5000, 6379, 8080, 8443, 8888,
+                    9200, 27017]
 
-    def __init__(self, timeout: float = 1.0, max_threads: int = 50):
+    def __init__(self, timeout: float = 2.0, max_threads: int = 50):
         """
         Initialize the scanner.
 
@@ -87,38 +89,4 @@ class Scanner:
             if self.check_port(host, port):
                 open_ports.append(port)
                 logger.debug("Open port found: %s:%d", host, port)
-        return open_ports
-
-    def grab_banner(self, host: str, port: int) -> Optional[str]:
-        """Attempt to grab a service banner from an open port."""
-        try:
-            with socket.create_connection((host, port), timeout=self.timeout) as sock:
-                sock.sendall(b"\r\n")
-                banner = sock.recv(1024).decode(errors="ignore").strip()
-                return banner if banner else None
-        except Exception:
-            return None
-
-    def run(self, target: str, ports: Optional[list] = None) -> ScanResult:
-        """Execute a full scan against the given target."""
-        start = datetime.utcnow()
-        result = ScanResult(target=target)
-
-        ip = self.resolve_target(target)
-        if not ip:
-            result.status = "failed"
-            return result
-
-        logger.info("Starting port scan on %s", ip)
-        result.open_ports = self.scan_ports(ip, ports)
-
-        for port in result.open_ports:
-            banner = self.grab_banner(ip, port)
-            if banner:
-                result.services[port] = banner
-
-        result.scan_duration = (datetime.utcnow() - start).total_seconds()
-        result.status = "complete"
-        logger.info("Scan complete: %d open ports found in %.2fs",
-                    len(result.open_ports), result.scan_duration)
-        return result
+       
