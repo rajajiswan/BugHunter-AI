@@ -56,12 +56,15 @@ ALL_TOOLS = RECON + ENUM + DIR_ENUM + VULN + EXPLOIT
 
 # Tool resource profiles (CPU%, RAM MB, estimated duration seconds)
 # PERSONAL NOTE: Adjusted nmap duration to 180s based on my typical scan times
+# PERSONAL NOTE: Bumped masscan cpu estimate to 90 - it pegs my cores harder than 80 in practice
+# PERSONAL NOTE: Increased sqlmap duration to 420s - complex targets often run longer for me
+# PERSONAL NOTE: Lowered theHarvester ram to 60 - never seen it go above that on my machine
 TOOL_RESOURCES = {
     "nmap": {"cpu": 30, "ram": 100, "duration": 180, "priority": 1},
-    "masscan": {"cpu": 80, "ram": 150, "duration": 300, "priority": 1},
+    "masscan": {"cpu": 90, "ram": 150, "duration": 300, "priority": 1},
     "amass": {"cpu": 40, "ram": 200, "duration": 180, "priority": 2},
     "sublist3r": {"cpu": 20, "ram": 80, "duration": 60, "priority": 2},
-    "theHarvester": {"cpu": 15, "ram": 70, "duration": 90, "priority": 3},
+    "theHarvester": {"cpu": 15, "ram": 60, "duration": 90, "priority": 3},
     "whatweb": {"cpu": 10, "ram": 50, "duration": 30, "priority": 3},
     "wafw00f": {"cpu": 10, "ram": 40, "duration": 20, "priority": 3},
     "dnsenum": {"cpu": 15, "ram": 60, "duration": 45, "priority": 2},
@@ -69,9 +72,7 @@ TOOL_RESOURCES = {
     "fierce": {"cpu": 15, "ram": 60, "duration": 50, "priority": 3},
     "nikto": {"cpu": 25, "ram": 100, "duration": 180, "priority": 2},
     "wpscan": {"cpu": 20, "ram": 90, "duration": 120, "priority": 2},
-    "sqlmap": {"cpu": 30, "ram": 120, "duration": 300, "priority": 1},
+    "sqlmap": {"cpu": 30, "ram": 120, "duration": 420, "priority": 1},
     "nuclei": {"cpu": 40, "ram": 150, "duration": 120, "priority": 1},
     "dirb": {"cpu": 20, "ram": 70, "duration": 180, "priority": 2},
-    "dirsearch": {"cpu": 25, "ram": 80, "duration": 150, "priority": 2},
-    "ffuf": {"cpu": 30, "ram": 100, "duration": 120, "priority": 2},
-    "gobuster": {"cpu": 25, "ram": 90, "duration": 100,
+    "dirsearch": {"cpu": 25, "ram": 80, "duration": 1
