@@ -46,11 +46,12 @@ class Scanner:
 
     # Common ports to check during quick scans
     # Added 8888 (Jupyter), 9200 (Elasticsearch), 5000 (Flask dev) - useful for CTF/lab targets
+    # Also added 4443 (alt HTTPS) and 8000 (common dev server) for my home lab setup
     COMMON_PORTS = [21, 22, 23, 25, 53, 80, 110, 143, 443, 445,
-                    3306, 3389, 5432, 5000, 6379, 8080, 8443, 8888,
-                    9200, 27017]
+                    3306, 3389, 5432, 5000, 6379, 8000, 8080, 8443, 8888,
+                    9200, 4443, 27017]
 
-    def __init__(self, timeout: float = 2.0, max_threads: int = 50):
+    def __init__(self, timeout: float = 3.0, max_threads: int = 50):
         """
         Initialize the scanner.
 
@@ -88,5 +89,5 @@ class Scanner:
         for port in ports:
             if self.check_port(host, port):
                 open_ports.append(port)
-                logger.debug("Open port found: %s:%d", host, port)
-       
+                logger.info("Open port found: %s:%d", host, port)
+        return open_ports
