@@ -59,6 +59,7 @@ ALL_TOOLS = RECON + ENUM + DIR_ENUM + VULN + EXPLOIT
 # PERSONAL NOTE: Bumped masscan cpu estimate to 90 - it pegs my cores harder than 80 in practice
 # PERSONAL NOTE: Increased sqlmap duration to 420s - complex targets often run longer for me
 # PERSONAL NOTE: Lowered theHarvester ram to 60 - never seen it go above that on my machine
+# PERSONAL NOTE: Set nikto priority to 3 - I usually want recon/enum done first before vuln scanning
 TOOL_RESOURCES = {
     "nmap": {"cpu": 30, "ram": 100, "duration": 180, "priority": 1},
     "masscan": {"cpu": 90, "ram": 150, "duration": 300, "priority": 1},
@@ -70,9 +71,5 @@ TOOL_RESOURCES = {
     "dnsenum": {"cpu": 15, "ram": 60, "duration": 45, "priority": 2},
     "dnsrecon": {"cpu": 20, "ram": 80, "duration": 60, "priority": 2},
     "fierce": {"cpu": 15, "ram": 60, "duration": 50, "priority": 3},
-    "nikto": {"cpu": 25, "ram": 100, "duration": 180, "priority": 2},
-    "wpscan": {"cpu": 20, "ram": 90, "duration": 120, "priority": 2},
-    "sqlmap": {"cpu": 30, "ram": 120, "duration": 420, "priority": 1},
-    "nuclei": {"cpu": 40, "ram": 150, "duration": 120, "priority": 1},
-    "dirb": {"cpu": 20, "ram": 70, "duration": 180, "priority": 2},
-    "dirsearch": {"cpu": 25, "ram": 80, "duration": 1
+    "nikto": {"cpu": 25, "ram": 100, "duration": 180, "priority": 3},
+    "wpscan": {"cpu": 20, "ram": 90, "duration": 12
