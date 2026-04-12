@@ -87,7 +87,6 @@ def can_run_tool(tool_name):
 
 ## Personal Notes
 
-> **Note (my fork):** On my laptop (8GB RAM, 4-core i5) the default thresholds of 70% CPU / 75% RAM
-> feel a bit aggressive — the system starts throttling tools earlier than necessary. I find
-> bumping CPU threshold to **80%** and RAM threshold to **85%** works better for local testing.
-> YMMV depending on your hardware.
+> **Note (personal fork):** On my machine (8-core, 16GB RAM) the default thresholds of 70% CPU / 75% RAM
+> feel a bit conservative. I've bumped my local defaults to **80% CPU / 85% RAM** in `resource_monitor.py`
+> to allow more parallelism. Lower-spec machines should keep the original defaults.
