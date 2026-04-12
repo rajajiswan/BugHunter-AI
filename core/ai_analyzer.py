@@ -54,7 +54,8 @@ class AIAnalyzer:
             else:
                 self.client = None
         elif self.backend == "ollama":
-            self.model = model or "llama3"
+            # I prefer mistral locally - better results for security analysis in my testing
+            self.model = model or "mistral"
             self.client = None  # ollama uses module-level calls
         else:
             raise ValueError(f"Unsupported backend: {backend}. Choose 'openai' or 'ollama'.")
@@ -89,54 +90,5 @@ class AIAnalyzer:
             elif self.backend == "ollama":
                 return self._query_ollama(prompt)
         except Exception as e:
-            print(f"[AI Analyzer] Error during analysis: {e}")
+            print(f"AI analysis failed: {e}")
             return None
-
-    def _build_prompt(self, scan_data: dict, extra_context: str = "") -> str:
-        """Build the analysis prompt from scan data."""
-        target = scan_data.get("target", "unknown")
-        findings = scan_data.get("findings", [])
-        raw_output = scan_data.get("raw_output", "")
-
-        prompt_parts = [
-            f"Target: {target}",
-            f"Scan Type: {scan_data.get('scan_type', 'general')}",
-            f"Total Findings: {len(findings)}",
-        ]
-
-        if findings:
-            prompt_parts.append("\nFindings:\n" + json.dumps(findings, indent=2))
-
-        if raw_output:
-            # Truncate raw output to avoid token limits
-            truncated = raw_output[:3000] + "..." if len(raw_output) > 3000 else raw_output
-            prompt_parts.append(f"\nRaw Tool Output:\n{truncated}")
-
-        if extra_context:
-            prompt_parts.append(f"\nAdditional Context:\n{extra_context}")
-
-        return "\n".join(prompt_parts)
-
-    def _query_openai(self, prompt: str) -> str:
-        """Send prompt to OpenAI API and return response."""
-        response = self.client.chat.completions.create(
-            model=self.model,
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": prompt},
-            ],
-            temperature=0.3,
-            max_tokens=1500,
-        )
-        return response.choices[0].message.content
-
-    def _query_ollama(self, prompt: str) -> str:
-        """Send prompt to local Ollama instance and return response."""
-        response = ollama.chat(
-            model=self.model,
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": prompt},
-            ],
-        )
-        return response["message"]["content"]
