@@ -61,12 +61,14 @@ def get_available_tools() -> list[str]:
 class ToolRunner:
     """Executes external security tools and captures their output."""
 
-    def __init__(self, default_timeout: int = 60):
+    def __init__(self, default_timeout: int = 120):
         """
         Initialize the ToolRunner.
 
         Args:
             default_timeout: Default timeout in seconds for tool execution.
+                             Increased from 60 to 120 since nikto/sqlmap scans
+                             frequently exceeded the original default on slow targets.
         """
         self.default_timeout = default_timeout
         self.available_tools = get_available_tools()
@@ -107,36 +109,3 @@ class ToolRunner:
             return ToolResult(
                 tool=tool,
                 command=cmd_str,
-                stdout=proc.stdout,
-                stderr=proc.stderr,
-                return_code=proc.returncode,
-                success=proc.returncode == 0,
-            )
-        except subprocess.TimeoutExpired:
-            logger.error("Tool '%s' timed out after %ds.", tool, timeout)
-            return ToolResult(
-                tool=tool,
-                command=cmd_str,
-                error=f"Execution timed out after {timeout} seconds.",
-            )
-        except Exception as exc:  # pylint: disable=broad-except
-            logger.error("Unexpected error running '%s': %s", tool, exc)
-            return ToolResult(
-                tool=tool,
-                command=cmd_str,
-                error=str(exc),
-            )
-
-    def nmap_scan(self, target: str, flags: Optional[list[str]] = None) -> ToolResult:
-        """Convenience method for running an nmap scan."""
-        args = flags or ["-sV", "-T4", "--open"]
-        args.append(target)
-        return self.run("nmap", args)
-
-    def whatweb_scan(self, target: str) -> ToolResult:
-        """Convenience method for running a WhatWeb fingerprint scan."""
-        return self.run("whatweb", ["-a", "3", target])
-
-    def whois_lookup(self, target: str) -> ToolResult:
-        """Convenience method for running a whois lookup."""
-        return self.run("whois", [target], timeout=20)
